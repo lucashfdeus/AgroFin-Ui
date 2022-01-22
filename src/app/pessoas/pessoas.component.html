@@ -1,0 +1,42 @@
+<div class="container">
+
+  <app-nav></app-nav>
+
+<h2>Pessoas</h2>
+<hr>
+
+<div class="form-inline">
+  <div class="form-group mb-2">
+    <input type="text" class="form-control mr-2" placeholder="pesquisar"
+    [(ngModel)]="filtroLista"
+    >
+  </div>
+</div>
+
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>CPF/CNPJ</th>
+      <th>Nome</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="pessoas && pessoas.length" >  <!--tratamento caso nao encontra algum opjeto. -->
+    <tr *ngFor="let pessoa of pessoasFiltradas">
+      <td>{{pessoa.pessoa_Id}}</td>
+      <td>{{pessoa.pessoa_Numero_Identificador}}</td>
+      <td>{{pessoa.pessoa_Nome}}</td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!pessoas.length">
+    <tr>
+      <td colspan="8">
+        <h4>Nenhuma pessoa encontrada!</h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+<!-- //Lucas -->
+
+</div>
+

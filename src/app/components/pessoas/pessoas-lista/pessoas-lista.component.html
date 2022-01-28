@@ -1,0 +1,79 @@
+<div class="card rounded shadow-sm p-2">
+
+  <div class="d-flex">
+    <div class="flex-fill pr-3">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Filtro: </div>
+        </div>
+        <input [(ngModel)]="filtroLista" type="text" class="form-control mr-2" placeholder="pesquisar">
+      </div>
+    </div>
+
+    <div>
+      <a class="d-flex btn btn-outline-primary" routerLink="/pessoas/detalhe">
+        <i class="fa fa-plus-circle my-1"></i>
+        <b class="ml-1 d-none d-sm-block">Novo</b>
+      </a>
+
+    </div>
+
+  </div>
+
+  <table class="table table-striped text-center table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th class="d-none d-md-table-cell">ID</th>
+        <th class="d-none d-md-table-cell">CPF/CNPJ</th>
+        <th>Nome</th>
+        <th>Logradouro</th>
+        <th class="d-none d-md-table-cell">Numero</th>
+        <th class="d-none d-md-table-cell">Complemento</th>
+        <th class="d-none d-md-table-cell">Cep</th>
+        <th>Bairro</th>
+        <th>Cidade</th>
+        <th>Estado</th>
+        <th></th>
+
+      </tr>
+    </thead>
+    <tbody *ngIf="pessoas && pessoas.length" class="text-center" >  <!--tratamento caso nao encontra algum opjeto. -->
+      <tr *ngFor="let pessoa of pessoasFiltradas" (click)="detalhePessoa(pessoa.pessoa_Id)" style="cursor: pointer;">
+        <td class="d-none d-md-table-cell" >{{pessoa.pessoa_Id}}</td>
+        <td class="d-none d-md-table-cell" >{{pessoa.pessoa_Numero_Identificador}}</td>
+        <td>{{pessoa.pessoa_Nome}}</td>
+        <td>{{pessoa.enderecos[0].endereco_Logradouro}}</td>
+        <td class="d-none d-md-table-cell">{{pessoa.enderecos[0].endereco_Numero}}</td>
+        <td class="d-none d-md-table-cell">{{pessoa.enderecos[0].endereco_Complemento}}</td>
+        <td class="d-none d-md-table-cell">{{pessoa.enderecos[0].endereco_Cep}}</td>
+        <td>{{pessoa.enderecos[0].endereco_Bairro}}</td>
+        <td>{{pessoa.enderecos[0].endereco_Cidade}}</td>
+        <td>{{pessoa.enderecos[0].endereco_Estado}}</td>
+
+        <td>
+          <button type="button" class="btn btn-danger btn-sm" (click)="openModal(template)">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!pessoas.length">
+      <tr>
+        <td colspan="8">
+          <h4>Nenhuma pessoa encontrada!</h4>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+
+</div>
+<!-- //Lucas -->
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Você tem certeza que deseja Excluir?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  </div>
+</ng-template>

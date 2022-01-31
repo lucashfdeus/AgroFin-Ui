@@ -18,7 +18,10 @@ export class PessoasListaComponent implements OnInit {
   public pessoas: Pessoa[] = [];
 
   public pessoasFiltradas: Pessoa[] = [];
+
   private filtroListado = '';
+
+  public pessoa_Id: number;
 
 
   constructor(
@@ -69,13 +72,30 @@ export class PessoasListaComponent implements OnInit {
 
   }
 
-  openModal(template: TemplateRef<any>): void {
+  openModal(event: any, template: TemplateRef<any>, pessoaId: number): void {
+    event.stopPropagation();
+    this.pessoa_Id = pessoaId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
   confirm(): void {
-
-    this.modalRef?.hide();
+    this.modalRef.hide();
+    this.spinner.show();
+    this.pessoaService.deletePessoa(this.pessoa_Id).subscribe(
+      (result: any) => {
+        if (result.message == 'Deletado') {
+          this.toastr.success('Excluído com sucesso!', 'Excluído');
+          this.spinner.hide();
+          this.getPessoas();
+        }
+      },
+      (error: any) => {
+        console.error(error);
+        this.toastr.error(`Erro ao tentar excluir pessoa ${this.pessoa_Id}`, 'Erro');
+        this.spinner.hide();
+      },
+      () =>  this.spinner.hide(),
+    );
     this.toastr.success('Excluído com sucesso!', 'Excluído');
   }
 

@@ -1,60 +1,84 @@
 <div class="card rounded shadow-sm">
-<form>
-  <div class="p-3">
-    <div class="form-row">
-      <div class="form-group col-md-12">
-        <label>Nome Completo</label>
-        <input type="text" class="form-control" placeholder="Insira o nome completo">
+  <form [formGroup]="form">
+    <div class="p-3">
+      <!-- <p>Form value: {{form.value | json}}</p>
+      <p>Form valid: {{form.status | json}} </p>  usado para verificar o form se está valido.-->
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label>Nome Completo</label>
+          <input type="text" class="form-control is-invalid"
+          [ngClass]="{'is-invalid': f.pessoa_Nome.errors && f.pessoa_Nome.touched}"
+          formControlName="pessoa_Nome" placeholder="Insira o nome completo">
+          <div *ngIf="f.pessoa_Nome.errors?.required" class="invalid-feedback">
+            O NOME é obrigatório
+          </div>
+          <div *ngIf="f.pessoa_Nome.errors?.minlength"class="invalid-feedback">
+            O NOME deve ter no mínimo 4 caracteres.
+          </div>
+          <div *ngIf="f.pessoa_Nome.errors?.maxlength" class="invalid-feedback">
+            O NOME deve ter no máximo 120 caracteres.
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label>CPF/CNPJ</label>
-        <input type="text" class="form-control" placeholder="CPF/CNPJ">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label>CPF/CNPJ</label>
+          <input type="text" class="form-control is-invalid"
+          [ngClass]="{'is-invalid': f.pessoa_Numero_Identificador.errors && f.pessoa_Numero_Identificador.touched}"
+          formControlName="pessoa_Numero_Identificador" placeholder="CPF/CNPJ">
+          <div *ngIf="f.pessoa_Numero_Identificador.errors?.required" class="invalid-feedback">
+            O CPF/CNPJ é obrigatório
+          </div>
+          <div *ngIf="f.pessoa_Numero_Identificador.errors?.minlength" class="invalid-feedback">
+            O CPF/CNPJ deve ter no mínimo 11 caracteres.
+          </div>
+          <div *ngIf="f.pessoa_Numero_Identificador.errors?.maxlength" class="invalid-feedback">
+            O CPF/CNPJ deve ter no máximo 14 caracteres.
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Logradouro</label>
+          <input type="datetime" class="form-control" placeholder="">
+        </div>
       </div>
-      <div class="form-group col-md-6">
-        <label>Logradouro</label>
-        <input type="datetime" class="form-control" placeholder="">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label>Numero</label>
-        <input type="text" class="form-control" placeholder="">
-      </div>
-      <div class="form-group col-md-4">
-        <label>Complemento</label>
-        <input type="text" class="form-control" placeholder="">
-      </div>
-      <div class="form-group col-md-4">
-        <label>CEP</label>
-        <input type="text" class="form-control" placeholder="">
-      </div>
-      <div class="form-group col-md-4">
-        <label>Bairro</label>
-        <input type="text" class="form-control" placeholder="">
-      </div>
-      <div class="form-group col-md-4">
-        <label>Cidade</label>
-        <input type="text" class="form-control" placeholder="">
-      </div>
-      <div class="form-group col-md-4">
-        <label>Estado</label>
-        <input type="text" class="form-control" placeholder="Ex: GO">
-      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>Numero</label>
+          <input type="text" class="form-control" placeholder="">
+        </div>
+        <div class="form-group col-md-4">
+          <label>Complemento</label>
+          <input type="text" class="form-control" placeholder="">
+        </div>
+        <div class="form-group col-md-4">
+          <label>CEP</label>
+          <input type="text" class="form-control" placeholder="">
+        </div>
+        <div class="form-group col-md-4">
+          <label>Bairro</label>
+          <input type="text" class="form-control" placeholder="">
+        </div>
+        <div class="form-group col-md-4">
+          <label>Cidade</label>
+          <input type="text" class="form-control" placeholder="">
+        </div>
+        <div class="form-group col-md-4">
+          <label>Estado</label>
+          <input type="text" class="form-control" placeholder="Ex: GO">
+        </div>
 
+      </div>
     </div>
-  </div>
-  <div class="card-footer">
-    <div class="d-flex">
-      <button class="btn btn-outline-secondary mr-auto border">
-        Cancelar Alteração
-      </button>
-      <button class="btn btn-success">
-        <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
-        Salvar Evento
-      </button>
+    <div class="card-footer">
+      <div class="d-flex">
+        <button class="btn btn-outline-secondary mr-auto border" (click)="resetForm()">
+          Cancelar Alteração
+        </button>
+        <button class="btn btn-success" [disabled]="!form.valid" (click)="salvarAlteracao()">
+          <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
+          Salvar Evento
+        </button>
+      </div>
     </div>
-  </div>
-</form>
+  </form>
 </div>

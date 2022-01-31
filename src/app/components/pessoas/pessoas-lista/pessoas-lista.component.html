@@ -51,12 +51,14 @@
         <td>{{pessoa.enderecos[0].endereco_Estado}}</td>
 
         <td>
-          <button type="button" class="btn btn-danger btn-sm" (click)="openModal(template)">
+          <button type="button" class="btn btn-danger btn-sm" (click)="openModal($event, template, pessoa.pessoa_Id)">
             <i class="fa fa-trash"></i>
           </button>
         </td>
 
       </tr>
+
+
     </tbody>
     <tfoot *ngIf="!pessoas.length">
       <tr>
@@ -72,7 +74,7 @@
 
 <ng-template #template>
   <div class="modal-body text-center">
-    <p>Você tem certeza que deseja Excluir?</p>
+    <p>Você tem certeza que deseja Excluir a Pessoa código {{this.pessoa_Id}} ?</p>
     <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
     <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
   </div>
